@@ -1,23 +1,27 @@
 package com.jira.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name= "Employees")
-
-
-
-
+@Table(name = "Employees")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +33,6 @@ public class Employee {
     @Column
     private int age;
 
-
-
     @Column
     private String password;
 
@@ -40,18 +42,13 @@ public class Employee {
     @Column
     private String Occupation;
 
-  //  @Column
-   // private long TaskId;
-
     @ManyToOne // pass arguments to that annotation
     @JoinColumn(name = "squad_id")
     @JsonIgnore
     private Squad squad;
 
+    // not sure about all,
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL) // Consider using mappedBy
     @JsonIgnore
     private Task task;
-
-
-
 }

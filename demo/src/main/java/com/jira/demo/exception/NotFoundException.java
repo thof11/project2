@@ -1,4 +1,4 @@
-package com.jira.demo;
+package com.jira.demo.exception;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {

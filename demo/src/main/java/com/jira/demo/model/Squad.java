@@ -1,16 +1,19 @@
 package com.jira.demo.model;
 
-import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
-
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@EqualsAndHashCode
 @Entity
 @Getter
 @Setter
@@ -30,8 +33,8 @@ public class Squad {
     @Column
     private String squadLeader;
 
+    // not sure about all
     @OneToMany(mappedBy = "squad", cascade = CascadeType.ALL)
-    //@JoinColumn(name = "employees")
     private List<Employee> employees;
 
 
@@ -62,7 +65,4 @@ public class Squad {
     public int hashCode() {
         return Objects.hash(this.squadId);
     }
-
-
-
 }

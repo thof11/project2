@@ -1,18 +1,15 @@
 package com.jira.demo.service;
 
 
-import com.jira.demo.NotFoundException;
-import com.jira.demo.dto.EmployeeNameDTO;
-import com.jira.demo.dto.EmployeeSquadDTO;
-
-//import com.jira.demo.exception.NotFoundException;
-import com.jira.demo.dto.EmployeeTaskDTO;
+import com.jira.demo.exception.NotFoundException;
+import com.jira.demo.dto.EmployeeSquadDto;
+import com.jira.demo.dto.EmployeeTaskDto;
 import com.jira.demo.model.Employee;
 import com.jira.demo.repository.EmployeeRepo;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,57 +17,27 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EmployeeService {
 
-
     private final EmployeeRepo employeeRepo;
-
-    @Autowired
     private final ModelMapper modelMapper;
 
-    public List<EmployeeSquadDTO>getAllEmployeesSquadDTOs() {
-        List<Employee> employees= employeeRepo.findAll();
+    public List<EmployeeSquadDto> getAllEmployeesSquadDTOs() {
+        List<Employee> employees = employeeRepo.findAll();
+        return employees.stream()
+                .map(employee -> modelMapper.map(employee, EmployeeSquadDto.class))
+                .collect(Collectors.toList());
+
+    }
+
+    public List<EmployeeTaskDto> getAllEmployeesTaskDTOs() {
+        List<Employee> employees = employeeRepo.findAll();
         //ModelMapper
         return employees.stream()
-                .map(employee -> modelMapper.map(employee, EmployeeSquadDTO.class))
+                .map(employee -> modelMapper.map(employee, EmployeeTaskDto.class))
                 .collect(Collectors.toList());
 
     }
-    public List<EmployeeTaskDTO>getAllEmployeesTaskDTOs() {
-        List<Employee> employees= employeeRepo.findAll();
-        //ModelMapper
-        return employees.stream()
-                .map(employee -> modelMapper.map(employee, EmployeeTaskDTO.class))
-                .collect(Collectors.toList());
-
-    }
-
-    public EmployeeService(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
-
-    public EmployeeNameDTO convertToDTO(Employee employee) {
-        return modelMapper.map(employee, EmployeeNameDTO.class);
-    }
-
-   /* public List<EmployeeSquadDTO>getAllEmployeesSquadDTOs(){
-        return employeeRepo.findAll()
-                .stream()
-                .map(this:: convertEntityToDTO)
-                .collect(Collectors.toList());
-
-    }
-
-    private EmployeeSquadDTO convertEntityToDTO(Employee employee){
-        EmployeeSquadDTO employeeSquadDTO= new EmployeeSquadDTO();
-        employeeSquadDTO.setName(employee.getName());
-        employeeSquadDTO.setEmail(employee.getEmail());
-        if (employee.getSquad() != null){
-        employeeSquadDTO.setSquadName(employee.getSquad().getSquadName());}
-        return employeeSquadDTO;
-    }*/
-
 
     public List<Employee> getAllEmployees() {
-
         return employeeRepo.findAll();
     }
 
@@ -81,7 +48,6 @@ public class EmployeeService {
     }
 
     public Employee createEmployee(Employee employee) {
-
         return employeeRepo.save(employee);
     }
 
@@ -94,7 +60,6 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(long employeeId) {
-
         employeeRepo.deleteById(employeeId);
     }
 

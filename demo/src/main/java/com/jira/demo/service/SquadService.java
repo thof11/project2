@@ -1,6 +1,6 @@
 package com.jira.demo.service;
 
-import com.jira.demo.NotFoundException;
+import com.jira.demo.exception.NotFoundException;
 import com.jira.demo.model.Employee;
 import com.jira.demo.model.Squad;
 import com.jira.demo.repository.EmployeeRepo;
@@ -10,9 +10,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class SquadService {
+
     private final SquadRepo squadRepo;
     private final EmployeeRepo employeeRepo;
 
