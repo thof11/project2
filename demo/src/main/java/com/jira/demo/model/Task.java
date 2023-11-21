@@ -1,14 +1,7 @@
 package com.jira.demo.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +28,7 @@ public class Task {
     @Column
     private int storyPoints;
 
-    @OneToOne // Consider changing this to @ManyToOne
+    @OneToOne  // Consider changing this to @ManyToOne
     @JoinColumn(name = "Employee_id")
     private Employee employee;
 }

@@ -48,7 +48,7 @@ public class Employee {
     private Squad squad;
 
     // not sure about all,
-    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL) // Consider using mappedBy
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.DETACH, orphanRemoval = false) // Consider using mappedBy
     @JsonIgnore
     private Task task;
 }

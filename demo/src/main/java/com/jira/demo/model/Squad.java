@@ -34,7 +34,7 @@ public class Squad {
     private String squadLeader;
 
     // not sure about all
-    @OneToMany(mappedBy = "squad", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "squad", cascade = CascadeType.DETACH, orphanRemoval = false)
     private List<Employee> employees;
 
 
