@@ -1,6 +1,7 @@
 package com.jira.demo.model;
 
 
+import com.jira.demo.utils.TaskProxy;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,31 @@ public class Task {
     @OneToOne  // Consider changing this to @ManyToOne
     @JoinColumn(name = "Employee_id")
     private Employee employee;
+
+    @Transient
+    private TaskProxy proxy;
+
+    public Task() {
+        this.proxy = new TaskProxy();
+
+    }
+
+    public void doSomething(Employee currentEmployee){
+        proxy.getTaskWithAccessControl(currentEmployee;
+    }
+
+    public void modifyTask(Employee employee, Task task,String taskTitle) {
+        proxy.modifyTaskWithAccessControl(employee, task, taskTitle);
+
+    }
+
+    public void deleteTask(Employee employee, Task task) {
+        proxy.deleteTaskWithAccessControl(employee, task);
+    }
+
+
+
+
 }
 
 
