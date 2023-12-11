@@ -10,51 +10,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
+@EnableFeignClients
 @SpringBootApplication
 public class JiraApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(JiraApplication.class, args);
-	}
-	@Autowired
-	private EmployeeRepo employeeRepo;
+    @Autowired
+    private EmployeeRepo employeeRepo;
 
-	@Autowired
-	private SquadRepo squadRepo;
-	@Autowired
-	private TaskRepo taskRepo;
+    @Autowired
+    private SquadRepo squadRepo;
 
-	@Override
-	public void run(String... args) throws Exception {
+    @Autowired
+    private TaskRepo taskRepo;
 
-		Squad squad = new Squad();
-		squad.setSquadName("delta");
-		squad.setSquadId(47L);
-		squadRepo.save(squad);
+    @Override
+    public void run(String... args) throws Exception {
 
-		Employee employee1= new Employee();
-		employee1.setId(45L);
-		employee1.setName("Barry");
-		employee1.setEmail("hello@outlook.com");
-		employee1.setSquad(squad);
-		employeeRepo.save(employee1);
+        Squad squad = new Squad();
+        squad.setSquadName("delta");
+        squad.setSquadId(47L);
+        squadRepo.save(squad);
+
+        Employee employee1 = new Employee();
+        employee1.setId(45L);
+        employee1.setName("Barry");
+        employee1.setEmail("hello@outlook.com");
+        employee1.setSquad(squad);
+        employeeRepo.save(employee1);
 
 
-		Task task1= new Task();
-		task1.setId(31L);
-		task1.setTaskTitle("Debug code");
-		task1.setStoryPoints(5);
-		task1.setEmployee(employee1);
-		taskRepo.save(task1);
+        Task task1 = new Task();
+        task1.setId(31L);
+        task1.setTaskTitle("Debug code");
+        task1.setStoryPoints(5);
+        task1.setEmployee(employee1);
+        taskRepo.save(task1);
+    }
 
-
-
-
-	}
-
-
-
-
-
+    public static void main(String[] args) {
+        SpringApplication.run(JiraApplication.class, args);
+    }
 }

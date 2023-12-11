@@ -2,7 +2,20 @@ package com.jira.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jira.demo.enums.Role;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,18 +50,10 @@ public class Employee {
     @Column
     private String Occupation;
 
-    @ElementCollection(targetClass= Role.class)
-    @CollectionTable(name= "employee_roles", joinColumn(name = "employee_id"))
+    @ElementCollection(targetClass = Role.class)
+    @CollectionTable(name = "employee_roles")
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles = new HashSet<>;
-
-    public Set<Role> getRoles(){
-        return roles;
-    }
-
-    public boolean hasRole(Role role) {
-        return roles.contains(role);
-    }
+    private Set<Role> roles = new HashSet<>();
 
     @ManyToOne // pass arguments to that annotation
     @JoinColumn(name = "squad_id")
@@ -56,7 +61,13 @@ public class Employee {
     private Squad squad;
 
     // not sure about all,
-    @OneToOne(mappedBy = "employee", cascade = CascadeType.DETACH, orphanRemoval = false) // Consider using mappedBy
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.DETACH) // Consider using mappedBy
     @JsonIgnore
     private Task task;
+
+
+    public boolean hasRole(Role role) {
+        return roles.contains(role);
+    }
+
 }

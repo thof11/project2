@@ -1,14 +1,16 @@
-package com.jira.demo.utils;
+package com.jira.demo.service;
 
 import com.jira.demo.enums.Role;
 import com.jira.demo.model.Employee;
 import com.jira.demo.model.Task;
-import com.jira.demo.repository.EmployeeRepo;
 import com.jira.demo.repository.TaskRepo;
+import lombok.AllArgsConstructor;
 
 import java.security.AccessControlException;
 
-public class TaskProxy {
+@AllArgsConstructor
+public class TaskService {
+
     private final TaskRepo taskRepo;
 
     public void getTaskWithAccessControl(Employee currentEmployee) {
@@ -20,10 +22,8 @@ public class TaskProxy {
         }
 
         //performTaskAction();
-        String taskName = String.valueOf(currentEmployee.getTask());
+        String taskName = currentEmployee.getTask().getTaskTitle();
         System.out.println(taskName);
-
-
     }
 
     public void modifyTaskWithAccessControl(Employee employee, Task task, String taskTitle) {
@@ -50,7 +50,6 @@ public class TaskProxy {
         }
 
         if (employee.getTask() == task) {
-
             taskRepo.delete(task);
         } else {
             System.out.println("Employee does not have task");
