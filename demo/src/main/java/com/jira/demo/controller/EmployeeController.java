@@ -1,10 +1,12 @@
 package com.jira.demo.controller;
 
+import com.jira.demo.client.AddressFeignClient;
 import com.jira.demo.dto.EmployeeSquadDto;
 import com.jira.demo.dto.EmployeeTaskDto;
 import com.jira.demo.model.Employee;
 import com.jira.demo.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +24,8 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 public class EmployeeController {
+
+    private final AddressFeignClient addressServiceFeignClient;
 
 
     private EmployeeService employeeService;
@@ -72,4 +76,22 @@ public class EmployeeController {
         employeeService.deleteAllEmployees();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @Autowired
+    public EmployeeController(AddressFeignClient addressServiceFeignClient){
+        this.addressServiceFeignClient= addressServiceFeignClient;
+    }
+
+    @GetMapping("/employee-addresses")
+    public String getAddressesForEmployee() {
+
+// Fetch addresses from other microservices using Feign client
+        String addresses = addressServiceFeignClient.getAddressesFromServiceA();
+
+        return addresses;
+    }
+
+
+
+
 }
