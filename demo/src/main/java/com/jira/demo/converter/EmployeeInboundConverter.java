@@ -1,18 +1,18 @@
 package com.jira.demo.converter;
 
 
-import com.jira.demo.dto.EmployeeDto;
+import com.jira.demo.dto.EmployeeRequestDto;
 import com.jira.demo.model.Employee;
 import org.modelmapper.AbstractConverter;
 
-public class EmployeeInboundConverter extends AbstractConverter<Employee, EmployeeDto> {
+public class EmployeeInboundConverter extends AbstractConverter<Employee, EmployeeRequestDto> {
 
     @Override
-    protected EmployeeDto convert(Employee employee) {
-        EmployeeDto employeeDTO = new EmployeeDto();
-        employeeDTO.setName(employee.getName());
-        employeeDTO.setAge(employee.getAge());
-        return employeeDTO;
+    protected EmployeeRequestDto convert(Employee employee) {
+        EmployeeRequestDto employeeRequestDTO = new EmployeeRequestDto();
+        employeeRequestDTO.setName(employee.getName());
+        employeeRequestDTO.setAge(employee.getAge());
+        return employeeRequestDTO;
     }
 
 }
