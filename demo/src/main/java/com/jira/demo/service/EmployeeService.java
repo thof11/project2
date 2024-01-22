@@ -1,6 +1,7 @@
 package com.jira.demo.service;
 
 
+import com.jira.demo.dto.EmployeeDto;
 import com.jira.demo.exception.NotFoundException;
 import com.jira.demo.dto.EmployeeSquadDto;
 import com.jira.demo.dto.EmployeeTaskDto;
@@ -49,6 +50,16 @@ public class EmployeeService {
 
     public Employee createEmployee(Employee employee) {
         return employeeRepo.save(employee);
+    }
+
+    public Employee createEmployeeDto(EmployeeDto employeeDto){
+        Employee employee=new Employee();
+
+        employee.setName(employeeDto.getName());
+        employee.setEmail(employeeDto.getEmail());
+        employee.setAge(employeeDto.getAge());
+                return employeeRepo.save(employee);
+
     }
 
     public Employee updateEmployee(long employeeId, Employee employee) {
