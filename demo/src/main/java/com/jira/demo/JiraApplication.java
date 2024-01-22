@@ -50,6 +50,7 @@ public class JiraApplication implements CommandLineRunner {
     }
 
     public static void main(String[] args) {
+
         SpringApplication.run(JiraApplication.class, args);
     }
 }
